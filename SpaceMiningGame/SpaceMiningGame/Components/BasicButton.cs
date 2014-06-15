@@ -3,6 +3,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using SpaceMiningGame;
 using SpaceMiningGame.Screens;
 using System;
@@ -23,35 +24,21 @@ namespace SpaceMiningGame.Components
 	{
 		#region Fields
 
-		private Texture2D texture;
+		private bool hovering = false;
 
 		#endregion Fields
 
 		#region Properties
 
-		/// <summary>
-		/// Gets or sets the position and size of the button
-		/// </summary>
-		public Rectangle bounds;
-
-		/// <summary>
-		/// Gets or sets the texture the button displays to the user
-		/// </summary>
-		public Texture2D Texture
-		{
-			get { return texture; }
-			set { texture = value; }
-		}
-
 		#endregion Properties
 
 		#region Constructor
 
-		public BasicButton(GameScreen screen, Rectangle bounds)
-
+		public BasicButton(GameScreen screen)
 			: base(screen)
 		{
-			this.bounds = bounds;
+			this.MouseEnter += BasicButton_MouseEnter;
+			this.MouseLeave += BasicButton_MouseLeave;
 		}
 
 		#endregion Constructor
@@ -72,15 +59,23 @@ namespace SpaceMiningGame.Components
 		/// <param name="gameTime"></param>
 		public override void Draw(GameTime gameTime)
 		{
-			base.Draw(gameTime);
-
-			//Get the spritebatch and draw the image of the button
-			SpriteBatch batch = Screen.SpriteBatch;
-			batch.Begin();
+			if (BaseTexture != null)
 			{
-				batch.Draw(Texture, bounds, Color.White);
+				SpriteBatch batch = Screen.SpriteBatch;
+				batch.Begin();
+				{
+					Vector2 scale = new Vector2(Size.X / BaseTexture.Width, Size.Y / BaseTexture.Height);
+					batch.Draw(BaseTexture, Position, null, (hovering) ? Color.LightGray : Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+				}
+				batch.End();
 			}
-			batch.End();
+
+			//base.Draw(gameTime);
+		}
+
+		public override void HandleInput(GameTime gameTime, InputState input)
+		{
+			base.HandleInput(gameTime, input);
 		}
 
 		#endregion Methods
@@ -90,6 +85,16 @@ namespace SpaceMiningGame.Components
 		#endregion Static Methods
 
 		#region Events
+
+		private void BasicButton_MouseEnter(object sender, MouseEvent e)
+		{
+			hovering = true;
+		}
+
+		private void BasicButton_MouseLeave(object sender, MouseEvent e)
+		{
+			hovering = false;
+		}
 
 		#endregion Events
 	}

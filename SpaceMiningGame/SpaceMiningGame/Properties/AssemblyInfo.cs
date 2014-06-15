@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // Change these attribute values to modify the information associated with an assembly.
 [assembly: AssemblyTitle("SpaceMiningGame")]
 [assembly: AssemblyProduct("SpaceMiningGame")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A game about managing a mining base in outerspace")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]

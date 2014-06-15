@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SpaceMiningGame.Components;
+using SpaceMiningGame.Screens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,8 +49,13 @@ namespace SpaceMiningGame
 		/// </summary>
 		protected override void Initialize()
 		{
-			// TODO: Add your initialization logic here
+			//Enable mouse
 			this.IsMouseVisible = true;
+
+			//Create screens
+			MainMenuScreen mainmenu = new MainMenuScreen(screenManager);
+			screenManager.AddScreen(mainmenu);
+
 			base.Initialize();
 		}
 

@@ -160,6 +160,11 @@ namespace SpaceMiningGame.Screens
 
 		#region Methods
 
+		public void AddComponent(ScreenComponent component)
+		{
+			components.Add(component);
+		}
+
 		/// <summary>
 		/// This is called when the screen should draw itself.
 		/// </summary>
@@ -194,6 +199,11 @@ namespace SpaceMiningGame.Screens
 			}
 		}
 
+		public ScreenComponent[] GetComponents()
+		{
+			return components.ToArray();
+		}
+
 		/// <summary>
 		/// Allows the screen to handle user input. Unlike Update, this method is only called when
 		/// the screen is active, and not when some other screen has taken the focus.
@@ -215,6 +225,11 @@ namespace SpaceMiningGame.Screens
 		/// </summary>
 		public virtual void Load()
 		{
+		}
+
+		public bool RemoveComponent(ScreenComponent component)
+		{
+			return components.Remove(component);
 		}
 
 		/// <summary>

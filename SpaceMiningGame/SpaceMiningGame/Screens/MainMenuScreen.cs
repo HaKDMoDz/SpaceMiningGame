@@ -3,6 +3,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceMiningGame.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,12 @@ namespace SpaceMiningGame.Screens
 		public override void Load()
 		{
 			base.Load();
+
+			//Add a testing button
+			BasicButton button = new BasicButton(this);
+			button.SetBaseTexture(GetContentManager().Load<Texture2D>("button"), true);
+			button.Position = new Vector2(0f);
+			AddComponent(button);
 		}
 
 		public override void Unload()

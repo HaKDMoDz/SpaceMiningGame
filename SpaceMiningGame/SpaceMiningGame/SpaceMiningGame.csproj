@@ -72,6 +72,9 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\MouseButton.cs" />
+    <Compile Include="Components\MouseClickEvent.cs" />
+    <Compile Include="Components\MouseEvent.cs" />
     <Compile Include="Components\ScreenComponent.cs" />
     <Compile Include="Components\BasicButton.cs" />
     <Compile Include="Screens\GameScreen.cs" />
