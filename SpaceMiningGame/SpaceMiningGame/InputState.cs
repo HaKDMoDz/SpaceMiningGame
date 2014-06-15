@@ -21,7 +21,9 @@ namespace SpaceMiningGame
 		#region Fields
 
 		private KeyboardState currentKeyboardState;
+		private MouseState currentMouseState;
 		private KeyboardState previousKeyboardState;
+		private MouseState previousMouseState;
 
 		#endregion Fields
 
@@ -36,11 +38,27 @@ namespace SpaceMiningGame
 		}
 
 		/// <summary>
+		/// Gets the current mouse state instance
+		/// </summary>
+		public MouseState CurrentMouseState
+		{
+			get { return currentMouseState; }
+		}
+
+		/// <summary>
 		/// Gets the previous keyboard state instance
 		/// </summary>
 		public KeyboardState PreviousKeyboardState
 		{
 			get { return previousKeyboardState; }
+		}
+
+		/// <summary>
+		/// Gets the previous mouse state instance
+		/// </summary>
+		public MouseState PreviousMouseState
+		{
+			get { return previousMouseState; }
 		}
 
 		#endregion Properties
@@ -75,6 +93,8 @@ namespace SpaceMiningGame
 		{
 			previousKeyboardState = currentKeyboardState;
 			currentKeyboardState = Keyboard.GetState();
+			previousMouseState = currentMouseState;
+			currentMouseState = Mouse.GetState();
 		}
 
 		#endregion Public Methods

@@ -15,12 +15,15 @@ namespace SpaceMiningGame
 	public class SpaceGame : Microsoft.Xna.Framework.Game
 	{
 		private GraphicsDeviceManager graphics;
+		private ScreenManager screenManager;
 		private SpriteBatch spriteBatch;
 
 		public SpaceGame()
 		{
 			graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
+			screenManager = new ScreenManager(this);
+			Components.Add(screenManager);
 		}
 
 		/// <summary>
@@ -45,7 +48,7 @@ namespace SpaceMiningGame
 		protected override void Initialize()
 		{
 			// TODO: Add your initialization logic here
-
+			this.IsMouseVisible = true;
 			base.Initialize();
 		}
 

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 #endregion Using statements
 
-namespace SpaceMiningGame
+namespace SpaceMiningGame.Screens
 {
 	public class ScreenManager : DrawableGameComponent
 	{
@@ -67,7 +67,7 @@ namespace SpaceMiningGame
 
 		#endregion Deconstructor
 
-		#region Public Methods
+		#region Methods
 
 		/// <summary>
 		/// Adds a new screen to the screen manager.
@@ -153,7 +153,7 @@ namespace SpaceMiningGame
 		/// </summary>
 		public override void Update(GameTime gameTime)
 		{
-			// Read the keyboard and gamepad.
+			// Update the keyboard and mouse states.
 			input.Update();
 
 			// Make a copy of the master screen list, to avoid confusion if the process of updating
@@ -213,7 +213,7 @@ namespace SpaceMiningGame
 			// Tell each of the screens to load their content.
 			foreach (GameScreen screen in screens)
 			{
-				//screen.Activate(false);
+				screen.Load();
 			}
 		}
 
@@ -227,13 +227,10 @@ namespace SpaceMiningGame
 			{
 				screen.Unload();
 			}
+			blankTexture.Dispose();
 		}
 
-		#endregion Public Methods
-
-		#region Private Methods
-
-		#endregion Private Methods
+		#endregion Methods
 
 		#region Static Methods
 

@@ -3,6 +3,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceMiningGame.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 #endregion Using statements
 
-namespace SpaceMiningGame
+namespace SpaceMiningGame.Screens
 {
 	/// <summary>
 	/// A screen is a single layer that has update and draw logic, and which can be combined with
@@ -23,6 +24,7 @@ namespace SpaceMiningGame
 	{
 		#region Fields
 
+		private List<ScreenComponent> components;
 		private bool isExiting = false;
 		private bool isPopup = false;
 		private bool otherScreenHasFocus;
@@ -92,6 +94,14 @@ namespace SpaceMiningGame
 		}
 
 		/// <summary>
+		/// Gets the spritebatch from the screenmanager
+		/// </summary>
+		public SpriteBatch SpriteBatch
+		{
+			get { return screenManager.SpriteBatch; }
+		}
+
+		/// <summary>
 		/// Gets the current alpha of the screen transition, ranging from 1 (fully active, no
 		/// transition) to 0 (transitioned fully off to nothing).
 		/// </summary>
@@ -132,8 +142,10 @@ namespace SpaceMiningGame
 
 		#region Constructor
 
-		public GameScreen()
+		public GameScreen(ScreenManager manager)
 		{
+			this.screenManager = manager;
+			this.components = new List<ScreenComponent>();
 		}
 
 		#endregion Constructor
@@ -146,13 +158,21 @@ namespace SpaceMiningGame
 
 		#endregion Deconstructor
 
-		#region Public Methods
+		#region Methods
 
 		/// <summary>
 		/// This is called when the screen should draw itself.
 		/// </summary>
 		public virtual void Draw(GameTime gameTime)
 		{
+			//Only draw the components when the screen is not hidden.
+			if (this.screenState != ScreenState.Hidden)
+			{
+				foreach (ScreenComponent component in components)
+				{
+					component.Draw(gameTime);
+				}
+			}
 		}
 
 		/// <summary>
@@ -180,8 +200,19 @@ namespace SpaceMiningGame
 		/// </summary>
 		public virtual void HandleInput(GameTime gameTime, InputState input)
 		{
+			if (this.IsActive)
+			{
+				foreach (ScreenComponent component in components)
+				{
+					component.HandleInput(gameTime, input);
+				}
+			}
 		}
 
+		/// <summary>
+		/// Loads the content for the screen, called by the screen manager when adding the screen to
+		/// the game
+		/// </summary>
 		public virtual void Load()
 		{
 		}
@@ -242,11 +273,13 @@ namespace SpaceMiningGame
 					screenState = ScreenState.Active;
 				}
 			}
+
+			//Update all the components on in the screen, even if the screen is hidden, the components should update
+			foreach (ScreenComponent component in components)
+			{
+				component.Update(gameTime);
+			}
 		}
-
-		#endregion Public Methods
-
-		#region Private Methods
 
 		/// <summary>
 		/// Helper method for getting the contentmanager of the game
@@ -285,7 +318,7 @@ namespace SpaceMiningGame
 			return true;
 		}
 
-		#endregion Private Methods
+		#endregion Methods
 
 		#region Static Methods
 
